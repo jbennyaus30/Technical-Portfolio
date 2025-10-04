@@ -1,0 +1,428 @@
+/* My Account page CSS */
+
+/* header{
+    width: 99.1vw;
+} */
+
+
+/* -------------------------
+    My Account
+  -------------------------*/
+
+/* -------------------------
+    Order
+-------------------------*/
+#myaccount{
+    display: flex;
+    gap: 80px;
+    justify-content: space-between;
+    max-width: 1360px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+#myaccount aside{
+    flex:1;
+}
+#myaccount main{
+    flex:3;
+}
+.shipped{
+    color: #30A31B;
+}
+.processing{
+    color: #DE9409;
+}
+.pending{
+    color: #C30A0A;
+}
+
+/* aside */
+aside .welcome{
+    font-size: 21px;
+    margin-bottom: 20px;
+}
+aside hr{
+    margin-bottom: 10px;
+}
+aside nav ul li{
+    padding: 15px 30px;
+    transition:0.2s all;
+}
+aside nav ul li:hover{
+    background-color: #F0EFEA;
+    border-radius: 5px;
+}
+
+/* main */
+main #orders ul li{
+    border: 1px solid #000;
+    padding: 40px;
+}
+main #orders ul li:not(:last-child){
+    margin-bottom: 20px;
+}
+main h3{
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+main h4{
+    font-size: 21px;
+    font-weight: 400;
+    margin-bottom: 20px; 
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+}
+main h4:after{
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: #000;
+    margin-left: 30px;
+}
+main #orders ul li .order-thum, main #orders ul li .order-summary, main #orders ul li .order-summary tbody{
+    display: flex;
+}
+main #orders ul li .order-thum{
+    margin-bottom: 20px;
+}
+main #orders ul li .order-thum img{
+    max-width: 100px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+main #orders ul li .order-summary{
+    justify-content: space-between;
+}
+
+main #orders ul li .order-summary tr{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #000;
+    margin-right: 30px;
+    padding-right: 30px;
+}
+main #orders ul li .order-summary tr:last-child{
+    border: none;
+}
+
+#myaccount #orders button{
+    margin-top: 0;
+    outline: 1px solid #000;
+    padding: 15px 40px;
+    border-radius: 5px;
+    color: #000;
+    background-color: #fff;
+    transition: background-color 0.3s;
+    font-size: 16px;
+    width: inherit;    
+}
+#myaccount #orders button::before{
+    opacity: 0;
+}
+#myaccount #orders button:hover{
+    background-color: #000;
+    color: #fff;
+    outline: none;
+}
+
+
+/* -------------------------
+    Order Details
+  -------------------------*/
+.order-detail{
+    text-align: left;
+}
+.order-detail table tr{
+    margin-bottom: 10px;
+    display: flex;
+}
+.order-detail table tr:last-child{
+    margin-bottom: 0;
+}
+.order-detail table th{
+    margin-right: 10px;
+    display: inline-block;
+}
+.order-detail hr{
+    margin: 40px 0;
+}
+.order-detail figure{
+    max-width: 150px;
+}
+.order-detail ol li{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.order-detail table{
+    margin-bottom: 40px;
+}
+.order-detail .order-text{
+    display: flex;
+    gap: 20px;
+}
+.order-address tr{
+    flex-direction: column;
+}
+
+/* -------------------------
+    Account Details
+  -------------------------*/
+/* Form styles */
+#myaccount fieldset {
+    margin-bottom: 30px;
+    border: none;
+}
+
+#myaccount label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#myaccount input, #myaccount textarea, #myaccount button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #F7F7F7;
+}
+
+#myaccount button {
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+#myaccount button:hover {
+    background-color: #C30A0A;
+}
+
+#myaccount .error-message {
+    display: none;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+#myaccount .mandatory{
+    color: red;
+}
+
+#myaccount .remenberme{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#myaccount .remenberme input{
+    width: inherit;
+    margin-right: 10px;
+}
+#myaccount .submit_button button{
+    max-width: 400px;
+    margin: 20px 0 0 0;
+}
+#myaccount .submit_button button:nth-of-type(2){
+    background-color: #fff;
+    color: #000;
+    outline: 2px solid #000;
+    outline-offset: -2px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+#myaccount .submit_button button:nth-of-type(2):hover{
+    background-color: #C30A0A;
+    color: #fff;
+    outline: none;
+}
+#myaccount button::before{
+    opacity: 0;
+}
+
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field input {
+    flex: 1;
+    padding-right: 40px; 
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-toggle-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+/* -------------------------
+    Billing Details
+  -------------------------*/
+
+#addressLine1{
+    margin-bottom: 10px;
+}
+select#country,select#state{
+    width: 100%;
+    padding: 10px;
+}
+
+
+/* Dim form fields by default */
+#myaccount input[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transition: opacity 0.3s ease;
+}
+
+/* Light up form fields when enabled */
+#myaccount input:not([disabled]) {
+    opacity: 1;
+}
+
+
+
+
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+.edit-button,
+.save-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Center "Edit" text and icon */
+.edit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text */
+    text-align: center;
+    font-size: 16px;
+}
+
+.edit-button i {
+    font-size: 16px;
+}
+
+/* Button hover effects */
+.edit-button:hover {
+    background-color: #ddd;
+}
+
+.save-button {
+    background-color: #000;
+    color: #fff;
+}
+
+.edit-button:hover {
+    background-color: #ddd;
+}
+
+.save-button:hover {
+    background-color: #333;
+}
+
+
+
+
+@media (max-width: 768px) {
+    #myaccount{
+        flex-direction: column;
+        gap: 40px;
+        margin: 40px 25px;
+        padding: 0;
+    }
+    #myaccount aside{
+        text-align: center;
+    }
+    aside nav ul{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+    main h3{
+        font-size: 24px;
+    }
+    aside nav ul li{
+        padding: 15px 0;
+        width: 50%;
+    }
+    main #orders ul li{
+        padding: 25px;
+    }
+    main #orders ul li .order-summary{
+        flex-direction: column;
+    }
+    main #orders ul li .order-summary table{
+        margin-bottom: 20px;
+    }
+    main #orders ul li .order-summary tbody{
+        flex-direction: column;
+    }
+    main #orders ul li .order-summary tr{
+        flex-direction: row;
+        border-right: none
+    }
+    main #orders ul li .order-summary tr th{
+        margin-right: 10px;
+    }
+    main #orders ul li .order-thum img{
+        margin-right: 10px;
+    }
+
+    /* -------------------------
+        Order Details
+    -------------------------*/
+    .order-detail ol li {
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-direction: row;
+    }
+    .order-detail table {
+        margin-bottom: 20px;
+    }
+    .order-detail hr {
+        margin: 25px 0;
+    }
+    .order-detail .order-text{
+        gap: 5px;
+        flex-direction: column;
+    }
+
+    /* -------------------------
+        Account Details
+    -------------------------*/
+    #myaccount fieldset {
+        margin-bottom: 20px;
+    }
+    main h4:after{
+        margin-left: 20px;
+    }
+
+}

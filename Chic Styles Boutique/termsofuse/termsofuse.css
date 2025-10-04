@@ -1,0 +1,25 @@
+/* Lookbook page CSS */
+
+/* header{
+    width: 99.1vw;
+} */
+
+/* -------------------------
+    Privacy Policy
+  -------------------------*/
+.termsofuse{
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+
+    @media (max-width: 768px) {
+        header {
+            width: 100vw;
+        }
+        .termsofuse{
+            margin: 40px 25px;
+            padding: 0;
+        }
+    }
