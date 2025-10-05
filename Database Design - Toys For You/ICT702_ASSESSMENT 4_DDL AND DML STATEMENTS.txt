@@ -1,0 +1,404 @@
+/*---- ICT702 - ASSESSMENT 4 - JOHN BENNY AUSTRIA (12301175) ----*/
+
+/*---- DDL STATEMENTS ----*/
+/*---- Creating Database ----*/
+CREATE DATABASE ICT702_12301175_Individual_Assignment;
+
+/*---- Table structure for table ‘ADDRESS’ ---- */
+CREATE TABLE ADDRESS
+(
+    Address_Id VARCHAR(18) NOT NULL PRIMARY KEY,
+    Street VARCHAR(50) NOT NULL,
+    Suburban VARCHAR(50) NOT NULL,
+    State VARCHAR(3) NOT NULL,
+    Post_Code INT NOT NULL
+    );
+
+/*---- Table structure for table ‘DRIVER_LICENSE’ ---- */
+CREATE TABLE DRIVER_LICENSE
+(
+    Driver_License_Number INT NOT NULL PRIMARY KEY,
+    Driver_License_Expiry_Date DATE NOT NULL
+    );
+
+/*---- Table structure for table ‘MANAGER_TITLE’ ---- */
+CREATE TABLE MANAGER_TITLE
+(
+    Mgr_Title VARCHAR(6) NOT NULL PRIMARY KEY,
+    Mgr_Highest_Qualification VARCHAR(10) NOT NULL,
+    Mgr_Qualification_Date DATE NOT NULL
+    );
+
+/*---- Table structure for table ‘PAYMENT’ ---- */
+CREATE TABLE PAYMENT
+(
+    Payment_Id VARCHAR(13) NOT NULL PRIMARY KEY,
+    Payment_Type VARCHAR(4) NOT NULL,
+    Amount NUMERIC(24, 2) NOT NULL
+    );
+
+/*---- Table structure for table ‘WAREHOUSE’ ---- */
+CREATE TABLE WAREHOUSE
+(
+    Wh_Id VARCHAR(7) NOT NULL PRIMARY KEY,
+    Address_Id VARCHAR(18) NOT NULL,
+    Wh_Email_Address VARCHAR(30) NOT NULL,
+    Wh_Phone_Number INT NOT NULL,
+    Wh_Land_Area NUMERIC(8,2) NOT NULL,
+    Wh_Loading_Bays INT NOT NULL,
+    Wh_Access_Points INT NOT NULL,
+    FOREIGN KEY(Address_Id) REFERENCES ADDRESS(Address_Id)
+    );
+
+/*---- Table structure for table ‘MANAGER’ ---- */
+CREATE TABLE MANAGER
+(
+    Mgr_Id VARCHAR(8) NOT NULL PRIMARY KEY,
+    Wh_Id VARCHAR(7) NOT NULL,
+    Mgr_Title VARCHAR(6) NOT NULL,
+    Driver_License_Number INT NOT NULL,
+    Mgr_First_Name VARCHAR(30) NOT NULL,
+    Mgr_Last_Name VARCHAR(30) NOT NULL,
+    Mgr_Contact_Number INT NOT NULL,
+    Mgr_Email_Address VARCHAR(30) NOT NULL,
+    Mgr_Start_Date DATE NOT NULL,
+    Mgr_Termination_Date DATE NOT NULL,
+    FOREIGN KEY(Wh_Id) REFERENCES WAREHOUSE(Wh_Id),
+    FOREIGN KEY(Mgr_Title) REFERENCES MANAGER_TITLE(Mgr_Title),
+    FOREIGN KEY(Driver_License_Number) REFERENCES DRIVER_LICENSE(Driver_License_Number)
+    );
+
+/*---- Table structure for table ‘EMPLOYEE’ ---- */
+CREATE TABLE EMPLOYEE
+(
+    Emp_Id VARCHAR(8) NOT NULL PRIMARY KEY,
+    Wh_Id VARCHAR(7) NOT NULL,
+    Mgr_Id VARCHAR(8) NOT NULL,
+    Driver_License_Number INT NOT NULL,
+    Emp_First_Name VARCHAR(30) NOT NULL,
+    Emp_Last_Name VARCHAR(30) NOT NULL,
+    Emp_Contact_Number INT NOT NULL,
+    Emp_Email_Address VARCHAR(30) NOT NULL,
+    Emp_Start_Date DATE NOT NULL,
+    Emp_Termination_Date DATE NOT NULL,
+    Emp_Type VARCHAR(30) NOT NULL,
+    FOREIGN KEY(Wh_Id) REFERENCES WAREHOUSE(Wh_Id),
+    FOREIGN KEY(Mgr_Id) REFERENCES MANAGER(Mgr_Id),
+    FOREIGN KEY(Driver_License_Number) REFERENCES    DRIVER_LICENSE(Driver_License_Number)
+    );
+
+/*---- Table structure for table ‘WORKER’ ---- */
+CREATE TABLE WORKER
+(
+    Emp_Id VARCHAR(8) NOT NULL,
+    Worker_Forklift_License_Number VARCHAR(9) NOT NULL,
+    Worker_Forklift_License_Expiry_Date DATE NOT NULL,
+    PRIMARY KEY(Emp_Id, Worker_Forklift_License_Number),
+    FOREIGN KEY(Emp_Id) REFERENCES EMPLOYEE(Emp_Id)
+    );
+
+/*---- Table structure for table ‘DRIVER’ ---- */
+CREATE TABLE DRIVER
+(
+    Emp_Id VARCHAR(8) NOT NULL,
+    Driver_Highest_Endorsement_Level VARCHAR(2) NOT NULL,
+    Driver_Endorsement_Expiry_Date DATE NOT NULL,
+    PRIMARY KEY(Emp_Id, Driver_Highest_Endorsement_Level),
+    FOREIGN KEY(Emp_Id) REFERENCES EMPLOYEE(Emp_Id)
+    );
+
+/*---- Table structure for table ‘JOCKEY’ ---- */
+CREATE TABLE JOCKEY
+(
+    Emp_Id VARCHAR(8) NOT NULL,
+    Jockey_Certificate_Title VARCHAR(8) NOT NULL,
+    Jockey_Certificate_Year_Awarded INT NOT NULL,
+    PRIMARY KEY(Emp_Id, Jockey_Certificate_Title),
+    FOREIGN KEY(Emp_Id) REFERENCES EMPLOYEE(Emp_Id)
+    );
+
+/*---- Table structure for table ‘TRANSPORT_VEHICLE’ ---- */
+CREATE TABLE TRANSPORT_VEHICLE
+(
+    Registration_Number VARCHAR(7) NOT NULL PRIMARY KEY,
+    Wh_Id VARCHAR(7) NOT NULL,
+    Emp_Id VARCHAR(8) NOT NULL,
+    Seating_Capacity INT NOT NULL,
+    Carrying_Capacity INT NOT NULL,
+    GVM INT NOT NULL,
+    Kerb_Weight INT NOT NULL,
+    Load_Space_Cubic_Metres NUMERIC(5,2) NOT NULL,
+    Max_Load_Area_Height NUMERIC(5,2) NOT NULL,
+    Max_Load_Area_Width NUMERIC(5,2) NOT NULL,
+    Max_Load_Area_Depth NUMERIC(5,2) NOT NULL,
+    Vehicle_Status VARCHAR(5) NOT NULL,
+    Vehicle_Type VARCHAR(10) NOT NULL,
+    FOREIGN KEY(Wh_Id) REFERENCES WAREHOUSE(Wh_Id),
+    FOREIGN KEY(Emp_Id) REFERENCES DRIVER(Emp_Id)
+    );
+
+/*---- Table structure for table ‘VAN’ ---- */
+CREATE TABLE VAN
+(
+    Registration_Number VARCHAR(7) NOT NULL,
+    VIN_Van VARCHAR(18) NOT NULL,
+    Van_Model VARCHAR(20) NOT NULL,
+    Manufacturing_Year INT NOT NULL,
+    PRIMARY KEY(Registration_Number, VIN_Van),
+    FOREIGN KEY(Registration_Number) REFERENCES TRANSPORT_VEHICLE(Registration_Number)
+    );
+
+/*---- Table structure for table ‘TRUCK’---- */
+CREATE TABLE TRUCK
+(
+    Registration_Number VARCHAR(7) NOT NULL,
+    VIN_Truck VARCHAR(18) NOT NULL,
+    Truck_Model VARCHAR(20) NOT NULL,
+    Manufacturing_Year int NOT NULL,
+    PRIMARY KEY(Registration_Number, VIN_Truck),
+    FOREIGN KEY(Registration_Number) REFERENCES TRANSPORT_VEHICLE(Registration_Number)
+    );
+
+/*---- Table structure for table ‘CUSTOMER’---- */
+CREATE TABLE CUSTOMER
+(
+    Cus_Id VARCHAR(13) NOT NULL PRIMARY KEY,
+    Address_Id VARCHAR(18) NOT NULL,
+    Cus_First_Name VARCHAR(30) NOT NULL,
+    Cus_Last_Name VARCHAR(30) NOT NULL,
+    Cus_Contact_Number INT NOT NULL,
+    Cus_Email_Address VARCHAR(30) NOT NULL,
+    FOREIGN KEY(Address_Id) REFERENCES ADDRESS(Address_Id)
+    );
+
+/*---- Table structure for table ‘INVOICE’---- */
+CREATE TABLE INVOICE
+(
+    Invoice_Id VARCHAR(13) NOT NULL PRIMARY KEY,
+    Cus_Id VARCHAR(13),
+    Invoice_Date DATE NOT NULL,
+    Invoice_Payment_Status Varchar(30) NOT NULL,
+    Payment_Id VARCHAR(13) NOT NULL,
+    FOREIGN KEY(Cus_Id) REFERENCES CUSTOMER(Cus_Id),
+    FOREIGN KEY(Payment_Id) REFERENCES PAYMENT(Payment_Id)
+    );
+
+/*---- Table structure for table ‘PRODUCT’---- */
+CREATE TABLE PRODUCT
+(
+    Product_Id VARCHAR(10) NOT NULL PRIMARY KEY,
+    Wh_Id VARCHAR(7) NOT NULL,
+    Product_Description VARCHAR(50) NOT NULL,
+    Sold_Price Numeric(5,2) NOT NULL,
+    Product_Type_Code INT NOT NULL,
+    FOREIGN KEY(Wh_Id) REFERENCES WAREHOUSE(Wh_Id)
+    );
+
+/*---- Table structure for table ‘LINE_ITEM’---- */
+CREATE TABLE LINE_ITEM
+(
+    Line_Item_Id VARCHAR(11) NOT NULL PRIMARY KEY,
+    Product_Id VARCHAR(10) NOT NULL,
+    Invoice_Id VARCHAR(13) NOT NULL,
+    Qty INT NOT NULL,
+    Line_Price NUMERIC(7,2) NOT NULL,
+    FOREIGN KEY(Product_Id) REFERENCES PRODUCT(Product_Id),
+    FOREIGN KEY(Invoice_Id) REFERENCES INVOICE(Invoice_Id)
+    );
+
+/*---- Table structure for table ‘DELIVERY_REQUEST’---- */
+CREATE TABLE DELIVERY_REQUEST
+(
+    Delivery_Id VARCHAR(12) NOT NULL PRIMARY KEY,
+    Request_Date DATE NOT NULL,
+    Requested_Delivery_Date DATE NOT NULL,
+    Actual_Delivery_Date DATE NOT NULL,
+    Delivery_Contact_Name VARCHAR(30) NOT NULL,
+    Delivery_Phone_Number INT NOT NULL,
+    Delivery_Instructions VARCHAR(200) NOT NULL,
+    Invoice_Id VARCHAR(13) NOT NULL,
+    Wh_Id VARCHAR(7) NOT NULL,
+    Address_Id VARCHAR(18) NOT NULL,
+    Cus_Id VARCHAR(13),
+    Emp_Id VARCHAR(8) NOT NULL,
+    Registration_Number VARCHAR(7) NOT NULL,
+    FOREIGN KEY(Invoice_Id) REFERENCES INVOICE(Invoice_Id),
+    FOREIGN KEY(Wh_Id) REFERENCES WAREHOUSE(Wh_Id),
+    FOREIGN KEY(Address_Id) REFERENCES ADDRESS(Address_Id),
+    FOREIGN KEY(Cus_Id) REFERENCES CUSTOMER(Cus_Id),
+    FOREIGN KEY(Emp_Id) REFERENCES EMPLOYEE(Emp_Id),
+    FOREIGN KEY(Registration_Number) REFERENCES TRANSPORT_VEHICLE(Registration_Number)
+    );
+
+
+/*---- DML STATEMENTS ----*/
+/*---- Dumping data for table ‘ADDRESS---- */
+INSERT into ADDRESS VALUES
+('157_ON_HD_NSW_2158', '157, Old Northern Road', 'Hills District', 'NSW', 2158),
+('178_GR_C__QSL_4034', '178 Gympie Road', 'Carseldine', 'QSL', 4034),
+('026_IC_R__NSW_2112', '26, Irvine Crescent', 'Ryde', 'NSW', 2112),
+('004_BC_WH_VIC_3150', '4, Bimbadeen Court', 'Wheelers Hill', 'VIC', 3150),
+('11A_HS_CP_NSW_2097', '11A, Heather Street', 'Collaroy Plateau', 'NSW', 2097),
+('012_FS_NM_VIC_3051', '12, Fogarty Street', 'North Melbourne', 'VIC', 3051),
+('018_KR_WP_NSW_2125', '18, Keelendi Road', 'West Pennant Hills', 'NSW', 2125);
+
+SELECT * FROM ADDRESS;
+
+/*---- Dumping data for table ‘DRIVER_LICENSE’---- */
+INSERT into DRIVER_LICENSE VALUES
+(358562600, '2026-06-04'),
+(358562601, '2025-03-10'),
+(358562602, '2025-11-07'),
+(358562603, '2026-04-22'),
+(358562604, '2025-03-20'),
+(358562605, '2025-09-09'),
+(358562606, '2027-07-07'),
+(358562607, '2026-10-02'),
+(358562608, '2026-06-26'),
+(358562609, '2025-03-10'),
+(358562610, '2025-11-07'),
+(358562611, '2026-04-22');
+
+SELECT * FROM DRIVER_LICENSE;
+
+
+/*---- Dumping data for table ‘MANAGER_TITLE’ ---- */
+INSERT into MANAGER_TITLE VALUES
+('MGRNSW', 'MASTERSNSW', '2022-06-09'),
+('MGRVIC', 'MASTERSVIC', '2023-07-22'),
+('MGRQSL', 'MASTERSQSL', '2023-02-12');
+
+SELECT * FROM MANAGER_TITLE;
+
+/*---- Dumping data for table ‘WAREHOUSE’ ---- */
+INSERT into WAREHOUSE VALUES
+('TOYNSW1', '157_ON_HD_NSW_2158', 'toynsw1@tfy.com.au', 552796245, 2400, 5, 10),
+('TOYVIC1', '004_BC_WH_VIC_3150', 'toyvic1@tfy.com.au', 552796246, 2450, 6, 12),
+('TOYQSL1', '178_GR_C__QSL_4034', 'toyqsl1@tfy.com.au', 552796247, 2500, 5, 14);
+
+SELECT * FROM WAREHOUSE;
+
+/*---- Dumping data for table ‘MANAGER’ ---- */
+INSERT into MANAGER VALUES
+('TFY00350', 'TOYNSW1', 'MGRNSW', 358562600, 'Caleigh', 'Stevie', 480527702, 'c.stevie@tfy.com.au', '2018-10-16', '2023-10-16'),
+('TFY00352', 'TOYQSL1', 'MGRQSL', 358562602, 'Gabe', 'Adrian', 480527704, 'c.driscoll@tfy.com.au', '2021-06-30', '2026-06-30'),
+('TFY00351', 'TOYVIC1', 'MGRVIC',358562601, 'Chase', 'Driscoll', 480527703, 'c.driscoll@tfy.com.au', '2023-01-04', '2028-01-04');
+
+SELECT * FROM MANAGER;
+
+/*---- Dumping data for table ‘PAYMENT’ ---- */
+INSERT into PAYMENT VALUES
+('PAYTFY1000023', 'Card', 95.4),
+('PAYTFY1000024', 'Card', 96.5),
+('PAYTFY1000025', 'Card', 148.5);
+
+SELECT * FROM PAYMENT;
+
+/*---- Dumping data for table ‘EMPLOYEE’ ---- */
+INSERT into EMPLOYEE VALUES
+('TFY01781', 'TOYNSW1', 'TFY00350', 358562603, 'Barnaby', 'Miles', 480527705, 'b.miles@tfy.com.au', '2019-05-12', '2024-05-12', 'Worker'),
+('TFY01782', 'TOYNSW1', 'TFY00350', 358562604, 'Evan', 'Tolly', 480527706, 'e.tolly@tfy.com.au', '2021-10-09', '2026-10-09', 'Jockey'),
+('TFY01783', 'TOYNSW1', 'TFY00350', 358562605, 'Promise', 'Meredith', 480527707, 'p.meredith@tfy.com.au', '2024-11-16', '2029-11-16', 'Driver'),
+('TFY01784', 'TOYVIC1', 'TFY00351', 358562606, 'Rodger', 'Valentine', 480527708, 'r.valentine@tfy.com.au', '2018-11-04', '2023-11-04', 'Worker'),
+('TFY01785', 'TOYVIC1', 'TFY00351', 358562607, 'Harland', 'Deacon', 480527709, 'h.deacon@tfy.com.au', '2019-02-11', '2024-02-11', 'Jockey'),
+('TFY01786', 'TOYVIC1', 'TFY00351', 358562608, 'Karter', 'Faron', 480527710, 'k.faron@tfy.com.au', '2020-11-28', '2025-11-28', 'Driver'),
+('TFY01787', 'TOYQSL1', 'TFY00352', 358562609, 'Sinclair', 'Ward', 480527711, 's.ward@tfy.com.au', '2022-03-27', '2027-03-27', 'Worker'),
+('TFY01788', 'TOYQSL1', 'TFY00352', 358562610, 'Denny', 'Travers', 480527712, 'd.travers@tfy.com.au', '2023-12-21', '2028-12-21', 'Jockey'),
+('TFY01789', 'TOYQSL1', 'TFY00352', 358562611, 'Vyvyan', 'Jackie', 480527713, 'v.jackie@tfy.com.au', '2024-11-16', '2029-11-16', 'Driver');
+
+SELECT * FROM EMPLOYEE;
+
+/*---- Dumping data for table ‘WORKER’ ---- */
+INSERT into WORKER VALUES
+('TFY01781', 'HRW000100', '2027-09-30'),
+('TFY01784', 'HRW000101', '2025-10-15'),
+('TFY01787', 'HRW000102', '2026-03-31');
+
+SELECT * FROM WORKER;
+
+/*---- Dumping data for table ‘DRIVER ---- */
+INSERT into DRIVER VALUES
+('TFY01783', 'T1', '2027-09-30'),
+('TFY01786', 'T1', '2025-10-15'),
+('TFY01789', 'T1', '2026-03-31');
+
+SELECT * FROM DRIVER;
+
+/*---- Dumping data for table ‘JOCKEY’ ---- */
+INSERT into JOCKEY VALUES
+('TFY01782', 'RGR40218', '2020'),
+('TFY01785', 'RGR40219', '2021'),
+('TFY01788', 'RGR40220', '2022');
+
+SELECT * FROM JOCKEY;
+
+/*---- Dumping data for table ‘TRANSPORT_VEHCILE’ ---- */
+INSERT into TRANSPORT_VEHICLE VALUES
+('TEBY50Y', 'TOYNSW1', 'TFY01783', 2, 907, 3500, 2593, 40, 2, 2.4, 4, 'Out', 'Truck'),
+('VEBY49Z', 'TOYVIC1', 'TFY01786', 2, 600, 3000, 2400, 15, 1.3, 1.5, 2, 'In', 'Van'),
+('TEBY48A', 'TOYQSL1', 'TFY01789', 2, 907, 3500, 2593, 40, 2, 2.4, 4, 'Out', 'Truck'),
+('VEBY47B', 'TOYNSW1', 'TFY01783', 2, 600, 3000, 2400, 15, 1.3, 1.5, 2, 'In', 'Van'),
+('TEBY46C', 'TOYVIC1', 'TFY01786', 2, 907, 3500, 2593, 40, 2, 2.4, 4, 'Out', 'Truck'),
+('VEBY45D', 'TOYQSL1', 'TFY01789', 2, 600, 3000, 2400, 15, 1.3, 1.5, 2, 'In', 'Van');
+
+SELECT * FROM TRANSPORT_VEHICLE;
+
+/*---- Dumping data for table ‘VAN’ ---- */
+INSERT into VAN VALUES
+('VEBY49Z', 'VANLCPCBVIC1100237', 'FORDTRANSIT2022-003', 2022),
+('VEBY47B', 'VANLCPCBNSW1100238', 'FORDTRANSIT2022-003', 2022),
+('VEBY45D', 'VANLCPCBQSL1100239', 'FORDTRANSIT2022-003', 2022);
+
+SELECT * FROM VAN;
+
+/*---- Dumping data for table ‘TRUCK’ ---- */
+INSERT into TRUCK VALUES
+('TEBY46C', 'TRULCPCBVIC1104575', 'ISUZUNSERIES2022-004', 2022),
+('TEBY50Y', 'TRULCPCBNSW1104576', 'ISUZUNSERIES2022-005', 2022),
+('TEBY48A', 'TRULCPCBQSL1104577', 'ISUZUNSERIES2022-006', 2022);
+
+SELECT * FROM TRUCK;
+
+/*---- Dumping data for table ‘CUSTOMER’ ---- */
+INSERT into CUSTOMER VALUES
+('CUS0123901457', '026_IC_R__NSW_2112', 'Lauren', 'Geena', 0226782583, 'l.geena@customer.com.au'),
+('CUS0123901458', '11A_HS_CP_NSW_2097', 'Em', 'Scarlett', 0226782584, 'e.scarlett@customer.com.au'),
+('CUS0123901459', '012_FS_NM_VIC_3051', 'Ophelia', 'Isabel', 0226782585, 'o.isabel@customer.com.au');
+
+
+SELECT * FROM CUSTOMER
+
+
+/*---- Dumping data for table ‘INVOICE’ ---- */
+INSERT into INVOICE VALUES
+('INV123014921A', 'CUS0123901457', '2023-09-06', 'Payed', 'PAYTFY1000023'),
+('INV123014922B', 'CUS0123901458', '2023-09-07', 'Payed', 'PAYTFY1000024'),
+('INV123014923C', 'CUS0123901459', '2023-09-08', 'Payed', 'PAYTFY1000025');
+
+SELECT * FROM INVOICE;
+
+/*---- Dumping data for table ‘PRODUCT’ ---- */
+INSERT into PRODUCT VALUES
+('PRO230957A', 'TOYNSW1', 'Big Bear', 23.85, 1234567890),
+('PRO230958B', 'TOYVIC1', 'Red Bike', 48.25, 1234567891),
+('PRO230959C', 'TOYQSL1', 'Blue Bike', 49.50, 1234567892);
+
+SELECT * FROM PRODUCT;
+
+/*---- Dumping data for table ‘LINE_ITEM’ ---- */
+INSERT into LINE_ITEM VALUES
+('LINSW000001', 'PRO230957A', 'INV123014921A', 4, 95.4),
+('LINSW000002', 'PRO230959C', 'INV123014922B', 2, 96.5),
+('LIVIC000001', 'PRO230958B', 'INV123014922B', 3, 148.5);
+
+SELECT * FROM LINE_ITEM;
+
+/*---- Dumping data for table ‘DELIVERY_REQUEST’ ---- */
+INSERT into DELIVERY_REQUEST VALUES
+('DLNSW0104579', '2023-09-06', '2023-09-13', '2023-09-14', 'Lauren Geena', 0226782583, 'Put beside the mail box.', 'INV123014921A', 'TOYNSW1', '026_IC_R__NSW_2112', 'CUS0123901457', 'TFY01782', 'TEBY50Y'), 
+('DLNSW0104580', '2023-09-07', '2023-09-14', '2023-09-13', 'Maybelle Zeb', 0226783457, 'Drop by the front door.', 'INV123014922B', 'TOYNSW1', '018_KR_WP_NSW_2125', 'CUS0123901458', 'TFY01782', 'TEBY50Y'),
+('DLVIC0104590', '2023-09-08', '2023-09-15', '2023-09-15', 'Opelia Isabel', 0226783585, 'Drop by the front door.', 'INV123014922B', 'TOYVIC1', '012_FS_NM_VIC_3051', 'CUS0123901458', 'TFY01785', 'TEBY46C');
+
+SELECT * FROM DELIVERY_REQUEST;
+
+
