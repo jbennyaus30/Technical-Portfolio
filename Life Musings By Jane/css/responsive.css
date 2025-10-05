@@ -1,0 +1,226 @@
+@media screen and (max-width: 460px){
+    .destination-item-content{
+        transform: translateY(76%);
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .footer-item h2{
+        font-size: 18px;
+    }
+
+    footer p{
+        font-size: 12px;
+    }
+
+    .subscribe-form form input{
+        font-size: 14px;
+        width: 80%;
+        max-width: 300px;
+    }
+    
+
+}
+
+@media screen and (min-width: 768px) {
+    .headerTitle p{
+        font-size: 1.4rem;
+    }
+
+    .destination-row{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .destination-item{
+        margin: 1px;
+    }
+
+    .footer-row{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+    
+    .footer-row{
+        text-align: center;
+    }
+
+
+    .footer-item img{
+        margin-left: 0;
+    }
+    
+    .footer-item .social-links{
+        justify-content: center;
+    }
+
+
+
+    .subscribe-form h2{
+        text-align: center;
+    }
+    .subscribe-form form{
+        margin-bottom: 20px;
+    }
+
+    .album-row, .top-row, .blog-row{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .album-item{
+        margin: 0;
+    }
+
+    .top-row{
+        gap: 0;
+    }
+
+    .facts-row{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .facts-row{
+        column-gap: 5rem;
+    }
+
+
+    
+}
+
+@media screen and (min-width: 992px){
+    .header-title h1{
+        font-size: 4rem;
+    }
+
+    #navbarShowBtn{
+        display: none;
+    }
+
+    #navbarToggle{
+        display: block!important;
+        background-color: transparent;
+        transform: translateX(0);
+        height: auto;
+        padding: 0;
+        position: static;
+        width: 100%;
+    }
+
+    #navbarCloseBtn{
+        display: none;
+    }
+
+    .navbarLinks{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    .navItem{
+        margin: 0;
+        margin-left: 2rem;
+    }
+
+    .navbar-scroll .navbarLinks .navLink{
+        color: var(--darkblue)
+    }
+
+    .destination-item-content{
+        transform: translateY(75%);
+    }
+
+    .subscribe-form{
+        padding-right: 0px;
+        margin-right: 0px; 
+    }
+
+    .subscribe-form h2{
+        text-align: left;
+    }
+
+    .about-row{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        align-items: center;
+        column-gap: 5rem;
+    }
+
+    .about-left{
+        margin-left: 10px;
+        padding-left: 6rem;
+    }
+
+    .about-right{
+        margin-right: 10px;
+        padding-right: 6rem;
+    }
+
+    .facts-row{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        column-gap: 5rem;
+    }
+
+    .contact-row{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        row-gap: 0;
+    }
+
+    .contact-form .form-control{
+        margin-left: 0;
+    }
+
+    .contact-form .form-control:nth-child(1){
+        margin-top:0;
+    }
+
+    .contact-form .btn{
+        margin-left: 0;
+    }
+
+    .contact-icon{
+        width: 45px;
+        height: 45px;
+        font-size: 1.4rem;
+        margin: 0 1rem;
+    }
+
+    .contact-item{
+        display: flex;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .contact-item:nth-child(1){
+        margin-top:0;
+    }
+
+    .contact-left{
+        padding-top: 1.8rem;
+    }
+
+
+}
+
+@media screen and (min-width: 1200px){
+    .destination-row{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .album-row, .top-row, .blog-row{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+
+}
